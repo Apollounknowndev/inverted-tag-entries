@@ -36,6 +36,7 @@ public class TagLoaderMixin {
      */
     @Redirect(
         method = "load",
+        remap = false,
         at = @At(
             value = "INVOKE",
             target = "Lcom/mojang/serialization/Codec;parse(Lcom/mojang/serialization/Dynamic;)Lcom/mojang/serialization/DataResult;"
