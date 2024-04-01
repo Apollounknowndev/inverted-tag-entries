@@ -63,6 +63,8 @@ public class TagLoaderMixin {
             list.clear();
         }
         advancedTagFile.entries().forEach(advancedEntry -> list.add(new TagLoader.EntryWithSource(advancedEntry, string)));
+
+        advancedTagFile.removals().forEach(tagEntry -> list.add(new TagLoader.EntryWithSource(new AdvancedTagEntry((TagEntryAccessor)tagEntry, true), string)));
     }
 
     /**

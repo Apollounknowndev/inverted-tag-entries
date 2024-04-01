@@ -25,6 +25,13 @@ public class AdvancedTagEntry extends TagEntry {
     );
     private final boolean invert;
     private final TagEntryAccessor accessor;
+
+    public AdvancedTagEntry(TagEntryAccessor entry, boolean invert) {
+        super(entry.id(), entry.tag(), entry.required());
+        this.invert = invert;
+        this.accessor = entry;
+    }
+
     protected AdvancedTagEntry(EntryId id, boolean required) {
         super(id.id(), id.tag(), required);
         this.invert = id.invert();
@@ -48,14 +55,14 @@ public class AdvancedTagEntry extends TagEntry {
         if (this.accessor.tag()) {
             Collection<T> collection = valueGetter.tag(this.accessor.id());
             if (collection == null) {
-                return !this.accessor.required();
+                return (!this.accessor.required()) || this.invert;
             }
 
             collection.forEach(resolveMethod);
         } else {
             T object = valueGetter.element(this.accessor.id());
             if (object == null) {
-                return !this.accessor.required();
+                return (!this.accessor.required()) || this.invert;
             }
 
             resolveMethod.accept(object);
